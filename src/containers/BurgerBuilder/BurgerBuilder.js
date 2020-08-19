@@ -5,9 +5,9 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import axios from '../../axios-orders';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import axios from '../../axios-orders';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -18,8 +18,8 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
   // constructor(props) {
-  //   super(props);
-  //   this.state = {}
+  //     super(props);
+  //     this.state = {...}
   // }
   state = {
     ingredients: null,
@@ -92,17 +92,17 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    //alert('You continued!!');
+    // alert('You continue!');
     this.setState({ loading: true });
     const order = {
       ingredients: this.state.ingredients,
       price: this.state.totalPrice,
       customer: {
-        name: 'Moreen',
+        name: 'Max Schwarzmüller',
         address: {
-          street: 'Testing 1',
-          zipcode: '124578',
-          country: 'Kenya',
+          street: 'Teststreet 1',
+          zipCode: '41351',
+          country: 'Germany',
         },
         email: 'test@test.com',
       },
@@ -126,9 +126,8 @@ class BurgerBuilder extends Component {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
     let orderSummary = null;
-
     let burger = this.state.error ? (
-      <p>ingredients can't be loaded</p>
+      <p>Ingredients can't be loaded!</p>
     ) : (
       <Spinner />
     );
@@ -159,14 +158,14 @@ class BurgerBuilder extends Component {
     if (this.state.loading) {
       orderSummary = <Spinner />;
     }
-
+    // {salad: true, meat: false, ...}
     return (
       <Aux>
         <Modal
           show={this.state.purchasing}
           modalClosed={this.purchaseCancelHandler}
         >
-          {orderSummary}{' '}
+          {orderSummary}
         </Modal>
         {burger}
       </Aux>
