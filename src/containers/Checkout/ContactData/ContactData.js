@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 import classes from './ContactData.css';
 import axios from '../../../axios-orders';
-import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
@@ -39,7 +39,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'Zip Code',
+          placeholder: 'ZIP Code',
         },
         value: '',
         validation: {
@@ -67,7 +67,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'email',
-          placeholder: 'Your Mail',
+          placeholder: 'Your E-Mail',
         },
         value: '',
         validation: {
@@ -80,8 +80,8 @@ class ContactData extends Component {
         elementType: 'select',
         elementConfig: {
           options: [
-            { value: 'Fastest', displayValue: 'Fastest' },
-            { value: 'Cheapest', displayValue: 'Cheapest' },
+            { value: 'fastest', displayValue: 'Fastest' },
+            { value: 'cheapest', displayValue: 'Cheapest' },
           ],
         },
         value: '',
@@ -116,6 +116,7 @@ class ContactData extends Component {
         this.setState({ loading: false });
       });
   };
+
   checkValidity(value, rules) {
     let isValid = true;
 
@@ -138,7 +139,9 @@ class ContactData extends Component {
     const updatedOrderForm = {
       ...this.state.orderForm,
     };
-    const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier],
+    };
     updatedFormElement.value = event.target.value;
     updatedFormElement.valid = this.checkValidity(
       updatedFormElement.value,
@@ -146,13 +149,11 @@ class ContactData extends Component {
     );
     updatedFormElement.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
-    console.log(updatedFormElement);
 
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm) {
       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
     }
-
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
 
@@ -164,7 +165,6 @@ class ContactData extends Component {
         config: this.state.orderForm[key],
       });
     }
-
     let form = (
       <form onSubmit={this.orderHandler}>
         {formElementsArray.map((formElement) => (
@@ -179,8 +179,7 @@ class ContactData extends Component {
             changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
         ))}
-
-        <Button btnType="Success" disable={!this.state.formIsValid}>
+        <Button btnType="Success" disabled={!this.state.formIsValid}>
           ORDER
         </Button>
       </form>
@@ -190,7 +189,7 @@ class ContactData extends Component {
     }
     return (
       <div className={classes.ContactData}>
-        <h4>Enter your contact data</h4>
+        <h4>Enter your Contact Data</h4>
         {form}
       </div>
     );
